@@ -5,19 +5,20 @@
     <title></title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css">
+    <link rel="stylesheet" href="bower_components/jqcloud2/dist/jqcloud.min.css">
     <link rel="stylesheet" href="style/app.css"/>
 </head>
 <body>
 
-<div class="container margin" ng-controller="homeCtrl" >
+<div class="container margin" ng-controller="homeCtrl">
     <div class="border row well">
         <div class="col-md-6">
             <p>{{title}}</p>
         </div>
         <div class="col-md-6">
-            <select class="border pull-right form-control" name="first" >
-                <option value="1"> Market </option>
-                <option value="2"> Two </option>
+            <select class="border pull-right form-control" name="first" ng-model="author"
+                    ng-options="idx as author for (idx, author) in dataObj.author" ng-change="wordCloud(author)">
+                <!--<option ng-model="a" ng-repeat="a in dataObj.author track by $index" ng-init="index = $index" ng-change="wordCloud(index)">{{a}}{{index}}</option>-->
             </select>
         </div>
     </div>
@@ -26,16 +27,16 @@
             <p>{{question}}</p>
         </div>
         <div class="col-md-6">
-            <select class="border pull-right form-control" name="secind">
-                <option value="1"> Questions </option>
-                <option value="2"> Two </option>
+            <select class="border pull-right form-control" name="second">
+                <option value=""> {{dataObj.section[author]}}</option>
+                <!--<option ng-repeat="sec in dataObj.section track by $index" ng-init="index = $index">{{sec}}</option>-->
             </select>
         </div>
     </div>
     <div class="chart_container row">
         <div class="border pull-left col-md-6">
             <div class="chart">
-
+                <nvd3 options="options" data="data"></nvd3>
             </div>
             <div class="condition-button">
                 <button class="btn btn-danger">negative</button>
@@ -45,7 +46,8 @@
         </div>
         <div class="border col-md-6 pull-right">
             <div class="chart_right_text">
-
+                <p><jq-cloud words="dataObj.keywords[author]" height="270" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jq-cloud>
+                </p>
             </div>
         </div>
     </div>
@@ -56,15 +58,17 @@
                     <table class="table table-striped">
                     <thead></thead>
                     <tbody>
-                    <tr>
+                    <tr ng-repeat="res in result track by $index" ng-init="index = $index">
                         <td>
                             <div class="row">
                                 <div class="col-md-8 pull-left">
-                                    <h3>BBC Sports - Janson Button and Maculum suffer problem in bracleon</h3>
+                                    <h3>
+                                        <a href="{{res.uid}}" target="_blank">{{res.title}}</a>
+                                    </h3>
                                 </div>
                                 <div class="col-md-4 pull-right">
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                        <div class="progress-bar progress-bar-positive" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
                                             <span class="sr-only">20% Complete (success)</span>
                                         </div>
                                     </div>
@@ -73,50 +77,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="row">
-                                <div class="col-md-8 pull-left">
-                                    <h3>BBC Sports - Janson Button and Maculum suffer problem in bracleon</h3>
-                                </div>
-                                <div class="col-md-4 pull-right">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="sr-only">20% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
-                                        Lorem Ipsum to be the neither same to as de ta to lorem Ipsum
+                                        {{res.description}}
                                     </p>
                                 </div>
                             </div>
@@ -141,13 +102,16 @@
 
 <!--bower libs-->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jqcloud2/dist/jqcloud.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="angular-jqcloud.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
 <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
 <!--custom js-->
 <script src="js/app.js"></script>
 <script src="js/controller/homeCtrl.js"></script>
+<script src="js/factory/dataFactory.js"></script>
 <!--custom js-->
 </body>
 </html>

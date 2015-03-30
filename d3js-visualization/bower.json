@@ -1,0 +1,13 @@
+{
+    "name":"Angular-visuliztion-module",
+    "version":"0.0.1",
+    "dependencies":{
+        "angular":"*",
+        "angular-nvd3":"*",
+        "bootstrap":"*",
+        "angular-ui":"*",
+        "angular-ui-router":"*",
+        "d3":"*",
+        "nvd3":"*"
+    }
+}

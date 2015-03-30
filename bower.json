@@ -8,6 +8,7 @@
         "angular-ui":"*",
         "angular-ui-router":"*",
         "d3":"*",
-        "nvd3":"*"
+        "nvd3":"*",
+        "jqcloud2": "2.x"
     }
 }
