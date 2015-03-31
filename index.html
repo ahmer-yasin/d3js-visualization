@@ -17,8 +17,7 @@
         </div>
         <div class="col-md-6">
             <select class="border pull-right form-control" name="first" ng-model="author"
-                    ng-options="idx as author for (idx, author) in dataObj.author" ng-change="wordCloud(author)">
-                <!--<option ng-model="a" ng-repeat="a in dataObj.author track by $index" ng-init="index = $index" ng-change="wordCloud(index)">{{a}}{{index}}</option>-->
+                    ng-options="idx as author['@name'] for (idx, author) in dataObj.author">
             </select>
         </div>
     </div>
@@ -29,7 +28,6 @@
         <div class="col-md-6">
             <select class="border pull-right form-control" name="second">
                 <option value=""> {{dataObj.section[author]}}</option>
-                <!--<option ng-repeat="sec in dataObj.section track by $index" ng-init="index = $index">{{sec}}</option>-->
             </select>
         </div>
     </div>
@@ -46,7 +44,8 @@
         </div>
         <div class="border col-md-6 pull-right">
             <div class="chart_right_text">
-                <p><jq-cloud words="dataObj.keywords[author]" height="270" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jq-cloud>
+                <p>
+                    <jq-cloud words="word" height="270" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jq-cloud>
                 </p>
             </div>
         </div>
