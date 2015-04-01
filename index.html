@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-6">
             <select class="border pull-right form-control" name="second">
-                <option value=""> {{dataObj.section[author]}}</option>
+                <option value="" ng-repeat="item in listData">{{item['@name']}}</option>
             </select>
         </div>
     </div>

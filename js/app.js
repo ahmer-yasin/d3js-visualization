@@ -8,6 +8,6 @@ app.config(function($httpProvider){
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     console.log('config');
 });
-app.run(function($http, dataFactory){
+app.run(function(){
     console.log('run');
 });
