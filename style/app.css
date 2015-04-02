@@ -1,12 +1,18 @@
 body {
     margin-top:10px;
 }
-.chart {
-    width: 300px;
-    height: 240px;
-    background-color:#ffffff;
+.chartjs {
+
+    width: 544px;
+    min-height: 550px;
+    background-color: #ffffff;
     margin: 5px auto 0 auto;
     border: 1px solid #e8e8e8;
+    /*width: 300px;*/
+    /*min-height: 240px;*/
+    /*background-color:#ffffff;*/
+    /*margin: 5px auto 0 auto;*/
+    /*border: 1px solid #e8e8e8;*/
 }
 .condition-button {
     width: 300px;
@@ -15,7 +21,7 @@ body {
 }
 .chart_right_text {
     width: 100%;
-    height: 270px;
+    min-height: 270px;
     background-color:#ffffff;
     margin: 10px auto 10px auto ;
 
@@ -26,7 +32,7 @@ body {
 .chart_container .col-md-6 {
     width: 49.5%;
     background-color: #f5f5f5;
-    height:305px ;
+    min-height:305px ;
 }
 .chart_container {
     margin-bottom: 20px;
@@ -56,4 +62,10 @@ svg{
 }
 .nv-legendWrap{
     display: none;
+}
+canvas{
+    margin-top: 23%;
+}
+div.jqcloud span.w1{
+    cursor: pointer;
 }
