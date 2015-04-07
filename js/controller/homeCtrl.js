@@ -16,6 +16,7 @@ app.controller('homeCtrl',function($scope, $http){
     $scope.listData = [];
     $http.get('http://119.81.106.34/searchblox/servlet/SearchServlet?facet=on&pagesize=3&query=*&facet.field=keywords&f.keywords.size=100&facet.field=section&&f.section.size=5&facet.field=author&&f.author.size=100&xsl=json')
         .success(function(res){
+            console.log(res);
             $scope.result = res.results.result;
             $scope.words =  res.facets[0].int;
             //$scope.dataObj.author = res.facets[2].int;
@@ -64,37 +65,58 @@ app.controller('homeCtrl',function($scope, $http){
             }
         };
         $scope.labels = [];
-        $scope.data = [];
-
-        $scope.colors = ["#bb4e11", "#52041b", "#ba7b18", "#a13a17", "#4e0310", "#bb2b11","#a1191a"];
         $scope.word = [];
+        $scope.data = [];
+        $scope.colors = ["#bb4e11", "#52041b", "#ba7b18", "#a13a17", "#4e0310", "#bb2b11","#a1191a"];
         $scope.wordCloudObj = function(obj){
-        angular.forEach(obj,function(v,k){
-              if(v){
-                $scope.word.push({'text': v['@name'],weight: v['#text']/*10 + Math.random() * 90*/ , handlers : {click: function() { $scope.getFilter(v['@name'])}}});
-            }
-        });
-        console.log($scope.word.length);
+            $scope.word = [];
+            angular.forEach(obj,function(v,k){
+                if(v){
+                    $scope.word.push({'text': v['@name'],weight: v['#text']/*10 + Math.random() * 90*/ , handlers : {click: function() { $scope.getFilter(v['@name'],'&f.keywords.filter=')}}});
+                }
+            });
         };
         $scope.pieChartFunc = function(obj,amount){
-            angular.forEach(obj,function(val,k){
-                $scope.data.push(val['#text']/amount * 100);
-                $scope.labels.push(val['@name']);
-            });
-            console.log($scope.data);
-            console.log($scope.labels);
+            $scope.labels = [];
+            $scope.data = [];
+            if(angular.isArray(obj)) {
+                angular.forEach(obj, function (val, k) {
+                    $scope.data.push(val['#text'] / amount * 100);
+                    $scope.labels.push(val['@name']);
 
+                });
+            }
+            else{
+                $scope.data.push(obj['#text']/amount * 100);
+                $scope.labels.push(obj['@name']);
+            }
+            console.log($scope.labels);
+            console.log($scope.data);
         };
     $scope.onClick = function (points, evt) {
-        console.log(points[0].label);
-        $scope.getFilter(points[0].label);
+        if(points[0].label){
+            console.log(points[0].label);
+            //$scope.getFilter(points[0].label, '&f.keywords.filter=');
+            $scope.getFilter(points[0].label, '&f.section.filter=');
+        }
+        else{
+            console.log('please chose right keywords');
+        }
     };
-    $scope.getFilter = function(filter){
-        $http.get('http://119.81.106.34/searchblox/servlet/SearchServlet?facet=on&pagesize=3&query=*&facet.field=keywords&f.keywords.size=100&f.keywords.filter='+filter+'&facet.field=section&&f.section.size=5&facet.field=author&&f.author.size=100&xsl=json')
+    $scope.getFilter = function(filter,type){
+        var filter = type+filter;
+        console.log(filter);
+        $http.get('http://119.81.106.34/searchblox/servlet/SearchServlet?facet=on&pagesize=3&query=*&facet.field=keywords&f.keywords.size=100'+filter+'&facet.field=section&&f.section.size=5&facet.field=author&&f.author.size=100&xsl=json')
             .success(function(res){
-                $scope.result = res.results.result;
-
                 console.log(res);
+                $scope.result = res.results.result;
+                $scope.words =  res.facets[0].int;
+                if(res.facets[0].int){
+                    $scope.wordCloudObj($scope.words);
+                }
+                if(res.facets[1].int){
+                   $scope.pieChartFunc(res.facets[1].int,res.facets[1]['@count']);
+                }
             })
             .error(function(err){
                 console.log(err)

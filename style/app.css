@@ -66,6 +66,7 @@ svg{
 canvas{
     margin-top: 23%;
 }
-div.jqcloud span.w1{
+
+div.jqcloud span[class^="w"] {
     cursor: pointer;
 }
