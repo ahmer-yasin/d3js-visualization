@@ -17,9 +17,7 @@
             <p>{{title}}</p>
         </div>
         <div class="col-md-6">
-            <select class="border pull-right form-control" name="first" ng-model="author"
-                    ng-options="idx as author['@name'] for (idx, author) in dataObj.author">
-            </select>
+            <select class="border pull-right form-control" name="first" id="" ng-model="author" ng-options="idx as item for (idx, item) in devisions" ng-change="changeIndex(author)"></select>
         </div>
     </div>
     <div class="border row well">
@@ -27,9 +25,7 @@
             <p>{{question}}</p>
         </div>
         <div class="col-md-6">
-            <select class="border pull-right form-control" name="second">
-                <option value="" ng-repeat="item in listData">{{item['@name']}}</option>
-            </select>
+            <select class="border pull-right form-control" ng-model="q" ng-options="k as v for (k, v) in questions[index]" ng-change="QuestionFilter()"></select>
         </div>
     </div>
     <div class="chart_container row">
@@ -37,7 +33,6 @@
             <div class="chartjs">
                 <canvas id="doughnut" class="chart chart-doughnut" data="data"
                         labels="labels" click="onClick"></canvas>
-                <!--<nvd3 options="options" data="data"></nvd3>-->
             </div>
             <div class="condition-button">
                 <button class="btn btn-danger">negative</button>
@@ -52,6 +47,9 @@
                 </p>
             </div>
         </div>
+    </div>
+    <div class="form-control" style="height: 100px;width: 100%; border: 1px solid #000000">
+      Search : <input type="text" ng-model="Search" ng-change="fetchData(Search)"  class="form-control"/>
     </div>
     <div class="post_wrapper border row well">
         <div class="col-md-12">
@@ -100,6 +98,9 @@
         </div>
     </div>
 </div><!-- /.container-fluid -->
+<div id="loading">
+    <img src="images/loading.gif" class="ajax-loader"/>
+</div>
 
 
 <!--bower libs-->
