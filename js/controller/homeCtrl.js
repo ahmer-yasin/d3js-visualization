@@ -27,6 +27,7 @@
                 $scope.changeIndex= function(index){
                     $scope.questionArr =$scope.jsonData.questionArray;
                     $scope.index = index;
+                    console.log(index);
 //                    angular.forEach($scope.result,function(v,k){
 //                        if(v.division.toLowerCase() == $scope.devisions[index]){
 //                            angular.forEach($scope.questions[k],function(v,key){
@@ -54,7 +55,7 @@
                                 console.log(Object.keys($scope.result).length);
                                 $scope.tableParams = new ngTableParams({
                                     page: 1,            // show first page
-                                    count: 3           // count per page
+                                    count: 10           // count per page
                                 },{
                                     total: $scope.result.length, // length of data
                                     getData: function($defer, params) {
@@ -79,7 +80,7 @@
 
                                 }
                             });
-                            $scope.changeIndex(0);
+                            $scope.questionArr =$scope.jsonData.questionArray;
                         })
                         .error(function(err){
                             console.log(err)
@@ -155,7 +156,7 @@
                             if (angular.isObject($scope.result) && Object.keys($scope.result).length) {
                                 $scope.tableParams = new ngTableParams({
                                     page: 1,            // show first page
-                                    count: 3           // count per page
+                                    count: 10           // count per page
                                 },{
                                     total: $scope.result.length, // length of data
                                     getData: function($defer, params) {
@@ -175,13 +176,18 @@
 
                 $scope.QuestionFilter = function(){
                     var facet;
+                    if($scope.author){
+                        facet = 'division:'+$scope.author;
+                    }else{
+                        facet = '*';
+                    }
                     if(this.q == 'Q4'){
-                        facet = $scope.jsonData.q4;
+                        facet += $scope.jsonData.q4;
                     }
                     if(this.q == 'Q5'){
-                        facet = $scope.jsonData.q5;
+                        facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.api_domain+facet)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet)
                         .success(function(res){
                             console.log(res);
                             angular.forEach(res.facets,function(val,key){
@@ -212,11 +218,14 @@
                                     $scope.questions.push(obj);
                                 }
                             });
-                            $scope.changeIndex(0);
+                            $scope.questionArr =$scope.jsonData.questionArray;
                         })
                         .error(function(err){
                             console.log(err)
                         });
+                }
+                $scope.clearFilter = function(){
+                    $scope.getFirstTime();
                 }
 
             })
