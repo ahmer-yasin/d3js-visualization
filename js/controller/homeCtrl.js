@@ -25,17 +25,17 @@
                 $scope.questions = [];
                 $scope.result    = [];
                 $scope.changeIndex= function(index){
-                    $scope.questionArr ={};
+                    $scope.questionArr =$scope.jsonData.questionArray;
                     $scope.index = index;
-                    angular.forEach($scope.result,function(v,k){
-                        if(v.division.toLowerCase() == $scope.devisions[index]){
-                            angular.forEach($scope.questions[k],function(v,key){
-                                if(key == 'Q4' ||key == 'Q5'){
-                                    $scope.questionArr[key] = v;
-                                };
-                            });
-                        }
-                    })
+//                    angular.forEach($scope.result,function(v,k){
+//                        if(v.division.toLowerCase() == $scope.devisions[index]){
+//                            angular.forEach($scope.questions[k],function(v,key){
+//                                if(key == 'Q4' ||key == 'Q5'){
+//                                    $scope.questionArr[key] = v;
+//                                };
+//                            });
+//                        }
+//                    })
                 };
                 var conditions = {};
                 var sentiments = {};
@@ -76,10 +76,10 @@
                                         }
                                     });
                                     $scope.questions.push(obj);
-                                    $scope.changeIndex(0);
+
                                 }
                             });
-                            $scope.questionArr = $scope.questions[0];
+                            $scope.changeIndex(0);
                         })
                         .error(function(err){
                             console.log(err)
@@ -212,6 +212,7 @@
                                     $scope.questions.push(obj);
                                 }
                             });
+                            $scope.changeIndex(0);
                         })
                         .error(function(err){
                             console.log(err)
