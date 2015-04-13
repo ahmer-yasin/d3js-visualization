@@ -1,37 +1,19 @@
 /**
  * Created by rw on 3/25/15.
  */
-app.factory('dataFactory',function($http){
-    console.log('factory');
-    var dataObj = {
-        author :[],
-        keywords:[],
-        section:[]
-    };
-    var resultObj = {};
-    var setData = function(data, result){
-        dataObj = data;
-        resultObj = result;
-    };
-    var getData = function(){
-        return {
-         data:dataObj,
-         result:resultObj
-        };
-    };
-    var getCurrentData = function(author){
-        angular.forEach(dataObj,function(v,k){
-            if(v.author == author){
-               console.log(v);
-               return v;
-            }
-        })
-    };
+app.factory('dataFactory',function(){
+   var jsonData = {
+       "q4":"&facet.field=Q4.sentiment&facet.field=Q4",
+       "q5":"&facet.field=Q5.sentiment&facet.field=Q5",
+       "api_domain":"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*",
+       "questionFilterUrl":"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*&facet.field=Q4.sentiment&facet.field=Q4",
+       "devisions" :"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*&facet.field=division",
+
+   };
 
     return{
-        setData:setData,
-        getData:getData,
-        getCurrentData:getCurrentData
-
+        Json :jsonData
     }
+
+
 });
