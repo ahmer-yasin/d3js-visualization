@@ -7,5 +7,5 @@
     "questionFilter":"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*&facet.field=Q4.sentiment&facet.field=Q4",
     "devisions" :"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*&facet.field=division",
     "facetSize":"100",
-    "pageSize":"&pagesize=0"
+    "pageSize":"&pagesize=1000"
 }

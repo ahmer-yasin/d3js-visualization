@@ -27,7 +27,6 @@
                 $scope.changeIndex= function(index){
                     $scope.questionArr =$scope.jsonData.questionArray;
                     $scope.index = index;
-                    console.log(index);
 //                    angular.forEach($scope.result,function(v,k){
 //                        if(v.division.toLowerCase() == $scope.devisions[index]){
 //                            angular.forEach($scope.questions[k],function(v,key){
@@ -41,7 +40,7 @@
                 var conditions = {};
                 var sentiments = {};
                 $scope.getFirstTime = function(){
-                    $http.get($scope.jsonData.devisions)
+                    $http.get($scope.jsonData.devisions+$scope.jsonData.pageSize)
                         .success(function(res){
                             if(res.facets.facet['@name'] == 'division'){
                                 angular.forEach(res.facets.facet.int,function(value,key){
@@ -52,7 +51,6 @@
                                 $scope.result.push(v)
                             });
                             if (angular.isObject($scope.result) && Object.keys($scope.result).length) {
-                                console.log(Object.keys($scope.result).length);
                                 $scope.tableParams = new ngTableParams({
                                     page: 1,            // show first page
                                     count: 10           // count per page
@@ -104,8 +102,12 @@
                         if(v){
                             $scope.word.push({'text': v['@name'],weight: v['#text']/*10 + Math.random() * 90*/ ,
                                 handlers : {click: function() {
-                                    $scope.tags.push({text:v['@name']});
-                                    $scope.getFilter(v['@name'],'&f.Q4.filter=');
+                                    if(!containsObject({text:v['@name']},$scope.tags)){
+                                        $scope.tags.push({text:v['@name']});
+                                        $scope.getFilter(v['@name'],'&f.Q4.filter=');
+                                    }else{
+                                        console.log('filter already exists');
+                                    }
                                 }
                                 }
                             });
@@ -132,8 +134,13 @@
                 };
                 $scope.onClick = function (points, evt) {
                     if(points[0].label){
-                        $scope.tags.push({text:points[0].label});
-                        $scope.getFilter(points[0].label, '&f.Q4.sentiment.filter=');
+
+                        if(!containsObject({text:points[0].label},$scope.tags)){
+                           $scope.tags.push({text:points[0].label});
+                            $scope.getFilter(points[0].label, '&f.Q4.sentiment.filter=');
+                        }else{
+                            console.log('filter already exist');
+                        }
                     }
                     else{
                         console.log('please chose right keywords');
@@ -167,7 +174,7 @@
                     if($scope.q  == 'Q5'){
                         facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.filterDivisionUrl+facet+'&f.'+$scope.q+'.size='+$scope.jsonData.facetSize+filter+facetFilter)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet+$scope.jsonData.pageSize+'&f.'+$scope.q+'.size='+$scope.jsonData.facetSize+filter+facetFilter)
                         .success(function(res){
                             angular.forEach(res.facets,function(val,key){
                                 if(val['@name'] == "Q4.sentiment" || val['@name'] == "Q5.sentiment"){
@@ -221,7 +228,7 @@
                     if(this.q == 'Q5'){
                         facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.filterDivisionUrl+facet +'&f.'+this.q+'.size='+$scope.jsonData.facetSize+facetFilter)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet +$scope.jsonData.pageSize+'&f.'+this.q+'.size='+$scope.jsonData.facetSize+facetFilter)
                         .success(function(res){
                             console.log(res);
                             angular.forEach(res.facets,function(val,key){
@@ -267,6 +274,15 @@
             String.prototype.startsWith = function (str){
                 return this.indexOf(str) === 0;
             };
+        }
+        function containsObject(obj, list) {
+            for (var x in list) {
+                if (list.hasOwnProperty(x) && list[x]['text'] === obj['text']) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     });
 }());
