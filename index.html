@@ -65,7 +65,7 @@
                     <table class="table table-striped">
                         <thead></thead>
                         <tbody>
-                        <tr ng-repeat="res in $data track by $index | filter:Search">
+                        <tr ng-repeat="res in $data | filter:Search">
                             <td>
                                 <div class="row">
                                     <div class="col-md-8 pull-left">
