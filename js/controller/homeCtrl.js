@@ -258,14 +258,6 @@
                             console.log(err)
                         });
                 };
-                $scope.clearFilter = function(){
-                    window.location.reload();
-//                    $scope.word = [];
-//                    $scope.data = [];
-//                    $scope.devisions = [];
-//                    $scope.getFirstTime();
-                }
-
             })
             .error(function(err){
                 console.log(err);
