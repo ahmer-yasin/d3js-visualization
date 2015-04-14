@@ -5,7 +5,6 @@
     'use strict';
 
     app.controller('homeCtrl',function($scope, $http, dataFactory, ngTableParams){
-
         $http.get('config.json')
             .success(function(data){
                 $scope.jsonData = data;
@@ -141,7 +140,6 @@
                     }
                     $http.get($scope.jsonData.api_domain+facet+filter)
                         .success(function(res){
-                            console.log(res);
                             angular.forEach(res.facets,function(val,key){
                                 if(val['@name'] == "Q4.sentiment" || val['@name'] == "Q5.sentiment"){
                                     $scope.pieChartFunc(val.int,val['@count']);
@@ -170,7 +168,6 @@
                         });
                 };
                 $scope.divisionFilter = function(){
-                    console.log(this.author);
                 };
                 var conditions = {};
 
@@ -187,7 +184,7 @@
                     if(this.q == 'Q5'){
                         facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.filterDivisionUrl+facet)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet +'&f.'+this.q+'.size='+$scope.jsonData.facetSize)
                         .success(function(res){
                             console.log(res);
                             angular.forEach(res.facets,function(val,key){
@@ -223,9 +220,13 @@
                         .error(function(err){
                             console.log(err)
                         });
-                }
+                };
                 $scope.clearFilter = function(){
-                    $scope.getFirstTime();
+                    window.location.reload();
+//                    $scope.word = [];
+//                    $scope.data = [];
+//                    $scope.devisions = [];
+//                    $scope.getFirstTime();
                 }
 
             })

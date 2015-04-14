@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
             <select class="border pull-right form-control" name="first"  ng-model="author" ng-options="item as item for item in devisions" ng-change="changeIndex(author)">
-                <option value="">Select Devision</option>
+                <option value="">Select Division</option>
             </select>
         </div>
     </div>
@@ -39,16 +39,11 @@
                 <canvas id="doughnut" class="chart chart-doughnut" data="data"
                         labels="labels" click="onClick"></canvas>
             </div>
-            <div class="condition-button">
-                <button class="btn btn-danger">negative</button>
-                <button class="btn btn-default">normal</button>
-                <button class="btn btn-success"> positive</button>
-            </div>
         </div>
         <div class="border col-md-6 pull-right">
             <div class="chart_right_text">
                 <p>
-                    <jq-cloud words="word" height="600" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jq-cloud>
+                    <jq-cloud words="word" height="350" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jq-cloud>
                 </p>
             </div>
         </div>
