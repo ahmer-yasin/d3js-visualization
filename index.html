@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="bower_components/jqcloud2/dist/jqcloud.min.css">
     <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"/>
+    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.css"/>
     <link rel="stylesheet" href="style/app.css"/>
 </head>
 <body>
@@ -32,6 +33,11 @@
                 <option value="">Select Question</option>
             </select>
         </div>
+    </div>
+    <div class="border row well">
+        <tags-input ng-model="tags" on-tag-removed="loadTags($query)">
+            <auto-complete></auto-complete>
+        </tags-input>
     </div>
     <div class="chart_container row">
         <div class="border pull-left col-md-6">
@@ -59,7 +65,7 @@
                     <table class="table table-striped">
                         <thead></thead>
                         <tbody>
-                        <tr ng-repeat="res in $data | filter:Search">
+                        <tr ng-repeat="res in $data track by $index | filter:Search">
                             <td>
                                 <div class="row">
                                     <div class="col-md-8 pull-left">
@@ -121,6 +127,7 @@
 <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
 <script src="bower_components/ng-table/dist/ng-table.js"></script>
+<script  src="bower_components/ng-tags-input/ng-tags-input.js"></script>
 <!--custom js-->
 <script src="js/app.js"></script>
 <script src="js/controller/homeCtrl.js"></script>

@@ -23,6 +23,7 @@
                 $scope.devisions = [];
                 $scope.questions = [];
                 $scope.result    = [];
+                $scope.tags      = [];
                 $scope.changeIndex= function(index){
                     $scope.questionArr =$scope.jsonData.questionArray;
                     $scope.index = index;
@@ -101,9 +102,18 @@
                     $scope.word = [];
                     angular.forEach(obj,function(v,k){
                         if(v){
-                            $scope.word.push({'text': v['@name'],weight: v['#text']/*10 + Math.random() * 90*/ , handlers : {click: function() { $scope.getFilter(v['@name'],'&f.Q4.filter=')}}});
+                            $scope.word.push({'text': v['@name'],weight: v['#text']/*10 + Math.random() * 90*/ ,
+                                handlers : {click: function() {
+                                    $scope.tags.push({text:v['@name']});
+                                    $scope.getFilter(v['@name'],'&f.Q4.filter=');
+                                }
+                                }
+                            });
                         }
                     });
+                };
+                $scope.loadTags = function(item){
+                    $scope.getFilter();
                 };
                 $scope.pieChartFunc = function(obj,amount){
                     $scope.labels = [];
@@ -122,29 +132,42 @@
                 };
                 $scope.onClick = function (points, evt) {
                     if(points[0].label){
-                        console.log(points[0].label);
+                        $scope.tags.push({text:points[0].label});
                         $scope.getFilter(points[0].label, '&f.Q4.sentiment.filter=');
                     }
                     else{
                         console.log('please chose right keywords');
                     }
                 };
-                $scope.getFilter = function(filter,type){
-                    var facet;
+                $scope.getFilter = function(fil,type){
+                    var facetFilter='';
+                    if($scope.tags.length){
+                        angular.forEach($scope.tags,function(val,key){
+                            if(val['text'] == 'positive'||val['text'] == 'negative'||val['text'] == 'neutral'){
+                                facetFilter += '&f.'+$scope.q+'.sentiment.filter='+val['text'];
+                            }else{
+                                facetFilter += '&f.'+$scope.q+'.filter='+val['text'];
+                            }
+                        });
+                    }
+                    var filter = '';
                     var facet;
                     if($scope.author){
                         facet = 'division:'+$scope.author;
                     }else{
                         facet = '*';
                     }
-                    var filter = type+filter;
+                    if(type && fil){
+                        filter = type+fil;
+                    }
+
                     if($scope.q  == 'Q4'){
                         facet += $scope.jsonData.q4;
                     }
                     if($scope.q  == 'Q5'){
                         facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.filterDivisionUrl+facet+'&f.'+$scope.q+'.size='+$scope.jsonData.facetSize+filter)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet+'&f.'+$scope.q+'.size='+$scope.jsonData.facetSize+filter+facetFilter)
                         .success(function(res){
                             angular.forEach(res.facets,function(val,key){
                                 if(val['@name'] == "Q4.sentiment" || val['@name'] == "Q5.sentiment"){
@@ -178,6 +201,14 @@
                 var conditions = {};
 
                 $scope.QuestionFilter = function(){
+                    var facetFilter='';
+                    if($scope.tags.length){
+                        angular.forEach($scope.tags,function(val,key){
+                            facetFilter += '&f.'+$scope.q+'.filter='+val['text'];
+                        });
+                        console.log(facetFilter);
+                    }
+
                     var facet;
                     if($scope.author){
                         facet = 'division:'+$scope.author;
@@ -190,7 +221,7 @@
                     if(this.q == 'Q5'){
                         facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.filterDivisionUrl+facet +'&f.'+this.q+'.size='+$scope.jsonData.facetSize)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet +'&f.'+this.q+'.size='+$scope.jsonData.facetSize+facetFilter)
                         .success(function(res){
                             console.log(res);
                             angular.forEach(res.facets,function(val,key){

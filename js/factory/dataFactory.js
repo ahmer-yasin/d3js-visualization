@@ -11,10 +11,7 @@ app.factory('dataFactory',function(){
        "devisions" :"http://119.81.106.34/searchblox/servlet/SearchServlet?facet=true&col=1&query=*&facet.field=division"
 
    };
-
     return{
         Json :jsonData
     }
-
-
 });
