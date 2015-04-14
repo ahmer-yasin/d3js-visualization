@@ -131,14 +131,20 @@
                 };
                 $scope.getFilter = function(filter,type){
                     var facet;
+                    var facet;
+                    if($scope.author){
+                        facet = 'division:'+$scope.author;
+                    }else{
+                        facet = '*';
+                    }
                     var filter = type+filter;
                     if($scope.q  == 'Q4'){
-                        facet = $scope.jsonData.q4;
+                        facet += $scope.jsonData.q4;
                     }
                     if($scope.q  == 'Q5'){
-                        facet = $scope.jsonData.q5;
+                        facet += $scope.jsonData.q5;
                     }
-                    $http.get($scope.jsonData.api_domain+facet+filter)
+                    $http.get($scope.jsonData.filterDivisionUrl+facet+'&f.'+$scope.q+'.size='+$scope.jsonData.facetSize+filter)
                         .success(function(res){
                             angular.forEach(res.facets,function(val,key){
                                 if(val['@name'] == "Q4.sentiment" || val['@name'] == "Q5.sentiment"){
