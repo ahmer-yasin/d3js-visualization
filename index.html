@@ -44,12 +44,12 @@
             <span style="cursor:pointer;" ng-if="filterQuestion" class="label label-success" ng-click="clearQuestionFilter()">{{filterQuestion}} <i class="glyphicon glyphicon-remove-circle"></i></span>
             <div class="chart_right_text">
                 <p>
-                    <jqcloud words="word" height="350" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jqcloud>
+                    <jqcloud words="word" height="366" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jqcloud>
                 </p>
             </div>
         </div>
     </div>
-    <div class="row well" style="height: 100px;width: 1170px; border: 2px solid #000000">
+    <div class="row well" style="height: 100px;border: 2px solid #000000">
       <b>  Search </b>:
         <input type="text" ng-model="Search"  class="form-control"/>
     </div>
@@ -91,13 +91,6 @@
                         <tfoot></tfoot>
                     </table>
                 </div>
-                <!--<div class="row">
-                <ul class="pagination" style="float:left;padding:16px;">
-                <li class="prev"><a id="facetview_decrement" href="1">..</a></li>
-                <li class="active"><a>1 – 10 of 17</a></li>
-                <li class="next"><a id="facetview_increment" href="10">next »</a></li>
-                </ul>
-                </div>-->
             </div>
         </div>
     </div>

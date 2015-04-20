@@ -107,10 +107,10 @@
               colors.push('green');
             }
             if(obj['key'] === 'negative'){
-              colors.push('red');
+              colors.push('#f44');
             }
             if(obj['key'] === 'neutral'){
-              colors.push('grey');
+              colors.push('#c7c7c7');
             }
           });
           return colors;
