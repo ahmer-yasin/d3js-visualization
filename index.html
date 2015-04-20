@@ -33,15 +33,21 @@
             </select>
         </div>
     </div>
+    <div class="border row well">
+        <div class="pull-left col-md-6">
+            <span style="cursor:pointer;" ng-if="filterSentiment" class="label label-success" ng-click="clearSentimentFilter()">{{filterSentiment}} <i class="glyphicon glyphicon-remove-circle"></i></span>
+        </div>
+        <div class="col-md-6 pull-right">
+            <span style="cursor:pointer;" ng-if="filterQuestion" class="label label-success" ng-click="clearQuestionFilter()">{{filterQuestion}} <i class="glyphicon glyphicon-remove-circle"></i></span>
+        </div>
+    </div>
     <div class="chart_container row">
         <div class="border pull-left col-md-6">
-            <span style="cursor:pointer;" ng-if="filterSentiment" class="label label-success" ng-click="clearSentimentFilter()">{{filterSentiment}} <i class="glyphicon glyphicon-remove-circle"></i></span>
             <div id="chart" class="span4 chart chart-doughnut">
                 <nvd3 options="options" data="data"></nvd3>
             </div>
         </div>
         <div class="border col-md-6 pull-right">
-            <span style="cursor:pointer;" ng-if="filterQuestion" class="label label-success" ng-click="clearQuestionFilter()">{{filterQuestion}} <i class="glyphicon glyphicon-remove-circle"></i></span>
             <div class="chart_right_text">
                 <p>
                     <jqcloud words="word" height="366" colors="{{colors}}" delay="10" steps="7" font-size="{from:0.10, to:0.04}"></jqcloud>
