@@ -51,7 +51,7 @@
 
       function getResponses(pageNumber) {
         
-        searchService.getResponses($scope.questionSelected, $scope.divisionSelected, pageNumber, 1000, $scope.filterQuestion, $scope.filterSentiment)
+        searchService.getResponses($scope.questionSelected, $scope.divisionSelected, pageNumber, CONFIG.PAGE_SIZE, $scope.filterQuestion, $scope.filterSentiment)
         .success(function(response){
           $scope.result = response.results.result;
           setWordCloudAndPieChart(response);
