@@ -32,7 +32,7 @@ body {
 .chart_container .col-md-6 {
     width: 49.5%;
     background-color: #f5f5f5;
-    min-height:391px ;
+    min-height:410px ;
 }
 .chart_container {
     margin-bottom: 20px;
@@ -86,4 +86,8 @@ div.jqcloud span[class^="w"] {
         float: none !important;
         margin:0 !important;
     }*/
+}
+.tags.col-md-12 {
+    min-height:10px;
+    padding:10px 5px;
 }
