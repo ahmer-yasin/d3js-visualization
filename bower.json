@@ -10,6 +10,9 @@
     "d3": "*",
     "nvd3": "*",
     "jqcloud2": "2.x",
-    "angular-chart.js": "~0.5.3"
+    "angular-jqcloud": "*",
+    "underscore": "*",
+    "angular-underscore-module": "*",
+    "angular-nvd3": "*"
   }
 }
