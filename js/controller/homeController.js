@@ -165,6 +165,59 @@
         });
       };
 
+      $scope.exportPieChartAsImage = function() {
+
+        var nodesToRecover = [];
+        var nodesToRemove = [];
+
+        console.log($('#chart'));
+
+        var targetElement = $('#chart').clone(true, true);
+
+        console.log(targetElement);
+        var svgElem = targetElement.find('svg');
+
+        console.log(svgElem);
+
+        svgElem.each(function(index, node) {
+          var parentNode = node.parentNode;
+          var svg = parentNode.innerHTML;
+
+          var canvas = document.createElement('canvas');
+
+          canvg(canvas, svg);
+
+          nodesToRecover.push({
+            parent: parentNode,
+            child: node
+          });
+          parentNode.removeChild(node);
+
+          nodesToRemove.push({
+            parent: parentNode,
+            child: canvas
+          });
+
+          parentNode.appendChild(canvas);
+        });
+
+
+        html2canvas(targetElement).then(function (canvas) {
+          document.body.appendChild(canvas);
+          //Canvas2Image.saveAsJPEG(canvas, 300, 300);
+        }, function (error) {
+          console.log(error);
+        });
+      };
+
+      $scope.exportWordCloudAsImage = function() {
+        html2canvas($('#wordCloud')).then(function (canvas) {
+          Canvas2Image.saveAsJPEG(canvas, 300, 300);
+        }, function (error) {
+          console.log(error);
+        });
+      };
+
       init();
     });
 }());

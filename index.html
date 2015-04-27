@@ -37,6 +37,7 @@
         <div class="border pull-left col-md-6">
             <div class="row" style="min-height:20px;">
                 <span style="cursor:pointer;" ng-if="filterSentiment" class="label label-success" ng-click="clearSentimentFilter()">{{filterSentiment}} <i class="glyphicon glyphicon-remove-circle"></i></span>
+                <span  ng-click="exportPieChartAsImage()"><i class="glyphicon glyphicon-remove-circle"></i></span>
             </div>
             <div id="chart" style="clear:both;" class="row span4 chart chart-doughnut">
                 <nvd3 options="options" data="data"></nvd3>
@@ -45,8 +46,9 @@
         <div class="border col-md-6 pull-right">
             <div class="row" style="min-height:20px;">
                 <span style="cursor:pointer;" ng-if="filterQuestion" class="label label-success" ng-click="clearQuestionFilter()">{{filterQuestion}} <i class="glyphicon glyphicon-remove-circle"></i></span>
+                <span  ng-click="exportWordCloudAsImage()"><i class="glyphicon glyphicon-remove-circle"></i></span>
             </div>
-            <div class="chart_right_text" >
+            <div id="wordCloud" class="chart_right_text" >
                 <p>
                     <jqcloud words="word" height="367" colors="{{colors}}" delay="10" steps="7" autoResize="true" font-size="{from:0.10, to:0.04}"></jqcloud>
                 </p>
@@ -109,6 +111,12 @@
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/angular-underscore-module/angular-underscore-module.js"></script>
 <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+<script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
+<script src="bower_components/html2canvas/dist/html2canvas.js"></script>
+<script src="bower_components/html2canvas/dist/html2canvas.svg.js"></script>
+<script src="bower_components/canvas2image/canvas2image/canvas2image.js"></script>
 <!--custom js-->
 <script src="js/app.js"></script>
 <script src="js/constants.js"></script>

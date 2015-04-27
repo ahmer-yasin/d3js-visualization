@@ -13,6 +13,8 @@
     "angular-jqcloud": "*",
     "underscore": "*",
     "angular-underscore-module": "*",
+    "html2canvas" : "#0.5.0-alpha2",
+    "canvas2image" : "*",
     "angular-nvd3": "*"
   }
 }
